@@ -72,3 +72,15 @@ The challenge here is to modify the configs in a way that you are able to SSH in
 * Associate Public IP with NIC
 * Associate NIC with virtual machine
 * Associate route table with subnet
+
+If we run a `terraform init` and `terraform plan`, we can see that Terraform tries to validate the configs for `azurerm_network_interface` and `azurerm_virtual_machine`. This is because the public IP and the network interface needs to be associated with these resources respectively before we create them. 
+
+Refer to Terraform documentation to determine how to do so.
+
+Now run:
+```
+$ terraform plan
+$ terraform apply
+```
+
+We also need to associate NSG with subnet and route table with subnet
