@@ -37,3 +37,38 @@ $ terraform destroy
 ```
 
 ## Step 1
+
+The purpose of this step is to get yourself familiar with creating Terraform resources, and understanding how to search for documentation and think in a certain way when creating configuration in HCL.
+
+Once again, ensure that your local `rg_name` parameter is set to the resource group name
+```
+locals {
+  rg_name = "my-resource-group"
+  rg_location = "westus"
+}
+```
+Note that this block of code is now moved to `locals.tf`, showing that Terraform will look at all files ending in `.tf` as part of the configuration.
+
+Additionally, set a variable named `prefix` in `vars.tf`, which will prefix all resources created by Terraform with that prefix - this is useful if multiple people are sharing the same Azure environment. 
+
+```
+variable "prefix" {
+  type = string
+  default = "my-prefix"
+}
+```
+
+The existing HCL files will create the following infrastructure
+* Virtual Network
+* Subnet
+* NSG
+* Network interface
+* Public IP
+* Virtual Machine
+* Route table
+
+The challenge here is to modify the configs in a way that you are able to SSH into the virtual machine using the public IP created in this config. In order to do so, higher level steps will require us to:
+* Associate NSG with subnet
+* Associate Public IP with NIC
+* Associate NIC with virtual machine
+* Associate route table with subnet
